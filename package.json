@@ -1,16 +1,16 @@
 {
   "name": "react-visualizationdb",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --color",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write \"src/**/*.tsx\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.tsx\" \"src/**/*.js\" \"example/**/*.tsx\" ",
     "lint": "tslint -p tsconfig.json",
     "build": "tsc"
   },
-  "author": "",
+  "author": "Vincent",
   "license": "ISC",
   "dependencies": {
     "@types/html-webpack-plugin": "^3.2.1",
