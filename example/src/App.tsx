@@ -49,8 +49,14 @@ class App extends React.Component<IProps, IStates> {
         },
       ],
     }
-    //tableList.push(table);
-    //tableList.push(table2);
+    tableList.push(table);
+    tableList.push(table2);
+    tableList.push(table2);
+    tableList.push(table2);
+    tableList.push(table2);
+    tableList.push(table2);
+    tableList.push(table2);
+    tableList.push(table2);
     return (
       <React.Fragment>
         <TablesList tables={tableList} />

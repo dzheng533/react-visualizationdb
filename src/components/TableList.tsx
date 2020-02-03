@@ -16,8 +16,8 @@ const SEmptyState = styled.div`
  */
 const TempWrapper = styled.div`
   overflow: scroll-x;
-  height: calc('100% - 20px');
-  width: calc('100% - 20px');
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
   display: flex;
   border: '1px solid grey';
   flex-wrap: wrap;

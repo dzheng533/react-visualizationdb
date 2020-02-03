@@ -12,7 +12,7 @@ interface ITableProps {
 const TableContainer = styled.div<ITableProps>`
   display: flex;
   flex-direction: column;
-  font-size: 60%;
+  font-size: 80%;
   border-radius: 3px;
   transition: 0.3s;
 `
@@ -21,21 +21,35 @@ const TableContainer = styled.div<ITableProps>`
  */
 const TableTitle = styled.p`
   text-align: center;
-  font-size: 90%;
+  font-weight: blod;
+  line-height: 20px;
   padding: 5px;
   overflow-wrap: break-word;
   border-bottom: 1px solid #26c281;
-  :hover {
-    transform: scale(1.05);
-  }
 `
 /**
  * 表列的容器
  */
 const TableRowsList = styled.ul`
-  overflow: scroll;
-  height: 150px;
+  overflow: auto;
+  height: calc(100% - 25px);
   padding: 3px;
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #d62929;
+  }
 `
 
 /**
