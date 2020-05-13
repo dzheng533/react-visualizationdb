@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import Table, { ITableMetaData, IColumnsMetaData,columnClickHandle } from './Table'
+import {Table, ITableMetaData, IColumnsMetaData,columnClickHandle } from './Table'
 
 /**
  * 空表状态
@@ -60,7 +60,7 @@ const TableWrapper = styled.div<ITableWrapperProps>`
 interface ITableListOption{
     dockedTableNames?:string[],
     highlightTables?:string[],
-    onColumnClick?:null
+    onColumnClick?:columnClickHandle
 }
 
 interface ITablesListProps {
@@ -96,6 +96,7 @@ export const TablesList: React.FC<ITablesListProps> = ({ tables , options}) => {
               tablename={table.tablename}
               columns={table.columns}
               comment={table.comment}
+              onColumnClick={options?.onColumnClick}
             ></Table>
           </TableWrapper>,
         )

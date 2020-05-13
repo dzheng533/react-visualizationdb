@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { TablesList } from '../../src/components/TableList'
+import { TablesList} from '../../src/components/TableList'
+import {Table,IColumnsMetaData} from '../../src/components/Table'
 
 // tslint:disable-next-line:no-empty-interface
 interface IProps {}
@@ -58,9 +59,12 @@ class App extends React.Component<IProps, IStates> {
     tableList.push(table2);
     tableList.push(table2);
     let option = {};
+    const columnClick = (tableName:string, columns:IColumnsMetaData[])=>{
+       console.log(tableName, 'click', columns)
+    }
     return (
       <React.Fragment>
-        <TablesList tables={tableList} options={{highlightTables:['t_cfg_index_def2']}} />
+        <TablesList tables={tableList} options={{highlightTables:['t_cfg_index_def2'],onColumnClick:columnClick}} />
       </React.Fragment>
     )
   }

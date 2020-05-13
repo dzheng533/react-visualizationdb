@@ -77,6 +77,7 @@ const TableCell = styled.div`
   display: flex;
   align-items: left;
   margin: 2px 8px 2px 0px;
+  line-height:20px;
 `
 export interface columnClickHandle{
   (tableName: string, columns:IColumnsMetaData[]) : void;
@@ -104,7 +105,7 @@ export interface ITableMetaData {
 }
 
 
-const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, onColumnClick }) => {
+export const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, onColumnClick }) => {
   useEffect(() => {
     console.log('tablename', tablename, columns)
   })
@@ -115,9 +116,12 @@ const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, onColumn
   const handleColumnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     
     let tag = e.target as HTMLElement;
-    if( (tag.tagName === 'DIV' || tag.tagName === 'SVG') && tag.parentElement){
+    if( (tag.tagName.toLowerCase() === 'div' || tag.tagName.toLowerCase() === 'svg' || tag.tagName === 'path') && tag.parentElement){
         tag = tag.parentElement;
+        if (tag.tagName.toLowerCase() === 'svg' && tag.parentElement)
+           tag = tag.parentElement;
     }
+    debugger
     let tableName = tag.getAttribute('data-tablename');
     let columnName = tag.getAttribute('data-columnname');
     let inTheQuery = tag.getAttribute('data-inquery');
@@ -166,4 +170,3 @@ const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, onColumn
     </TableContainer>
   )
 }
-export default Table
