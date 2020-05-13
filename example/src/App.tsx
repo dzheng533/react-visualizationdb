@@ -51,15 +51,16 @@ class App extends React.Component<IProps, IStates> {
     }
     tableList.push(table);
     tableList.push(table2);
+    tableList.push(table);
     tableList.push(table2);
     tableList.push(table2);
     tableList.push(table2);
     tableList.push(table2);
     tableList.push(table2);
-    tableList.push(table2);
+    let option = {};
     return (
       <React.Fragment>
-        <TablesList tables={tableList} />
+        <TablesList tables={tableList} options={{highlightTables:['t_cfg_index_def2']}} />
       </React.Fragment>
     )
   }

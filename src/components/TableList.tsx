@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import Table, { ITableMetaData, IColumnsMetaData } from './Table'
+import Table, { ITableMetaData, IColumnsMetaData,columnClickHandle } from './Table'
 
 /**
  * 空表状态
@@ -47,7 +47,7 @@ interface ITableWrapperProps {
 }
 
 const TableWrapper = styled.div<ITableWrapperProps>`
-  width: 150px;
+  width: auto;
   max-height: 200px;
   border-radius: 3px;
   overflow: hidden;
@@ -57,20 +57,40 @@ const TableWrapper = styled.div<ITableWrapperProps>`
   box-shadow: ${({ highlightForRelationship }) =>
     highlightForRelationship === 'true' ? '0px 0px 8px #4B70FE' : 'none'};
 `
-
-interface ITablesListProps {
-  tables: ITableMetaData[]
+interface ITableListOption{
+    dockedTableNames?:string[],
+    highlightTables?:string[],
+    onColumnClick?:null
 }
 
-export const TablesList: React.FC<ITablesListProps> = ({ tables }) => {
-  const [filtered, setPinnedTables] = useState([])
-  const tmpTables = []
+interface ITablesListProps {
+  tables: ITableMetaData[],
+  options?: ITableListOption
+}
+
+export const TablesList: React.FC<ITablesListProps> = ({ tables , options}) => {
+  const [filtered, setPinnedTables] = useState([]);
+  const tmpTables = [];
+
   if (tables) {
     for (const tkey in tables) {
       if (tables[tkey]) {
-        const table = tables[tkey]
+        const table = tables[tkey];
+        let isHighlightTable = 'false';
+        if(options){
+          const {dockedTableNames,highlightTables,onColumnClick} = options;
+          if(highlightTables && highlightTables.length > 0){
+            for ( const htkey in highlightTables){
+              if(highlightTables[htkey] === table.tablename){
+                isHighlightTable = 'true';
+                break;
+              }
+            }
+          }
+        }
+
         tmpTables.push(
-          <TableWrapper highlightForRelationship={'false'}>
+          <TableWrapper highlightForRelationship={isHighlightTable}>
             <Table
               key={table.tablename}
               tablename={table.tablename}
@@ -89,7 +109,7 @@ export const TablesList: React.FC<ITablesListProps> = ({ tables }) => {
     <TempWrapper>
       <SEmptyState>
         <span>
-          Sorry, there are no tables that matched your search. <br /> Please search again.
+          没有数据表信息。
         </span>
       </SEmptyState>
     </TempWrapper>

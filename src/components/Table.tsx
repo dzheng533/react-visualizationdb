@@ -19,13 +19,13 @@ const TableContainer = styled.div<ITableProps>`
 /**
  * 表头
  */
-const TableTitle = styled.p`
-  text-align: center;
+const TableTitle = styled.div`
+  text-align: left;
   font-weight: blod;
   line-height: 20px;
   padding: 5px;
   overflow-wrap: break-word;
-  border-bottom: 1px solid #26c281;
+  border-bottom: 1px solid #666;
 `
 /**
  * 表列的容器
@@ -34,9 +34,10 @@ const TableRowsList = styled.ul`
   overflow: auto;
   height: calc(100% - 25px);
   padding: 3px;
+  margin: 2px;
   ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #f5f5f5;
   }
 
@@ -46,9 +47,9 @@ const TableRowsList = styled.ul`
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: 5px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #d62929;
+    background-color: #f0f0f0;
   }
 `
 
@@ -61,7 +62,6 @@ interface ITableRowProps {
 }
 const TableRow = styled.li<ITableRowProps>`
   display: flex;
-  justify-content: space-between;
   list-style: none;
   padding: 0px 3px;
   border: ${props => (props.affected ? '2px solid #26c281' : '2px solid transparent')};
@@ -72,13 +72,15 @@ const TableRow = styled.li<ITableRowProps>`
     cursor: pointer;
   }
 `
-const TableCell = styled.p`
+const TableCell = styled.div`
   font-size: 100%;
   display: flex;
-  align-items: center;
-  margin: 2px 0px 2px 0px;
+  align-items: left;
+  margin: 2px 8px 2px 0px;
 `
-
+export interface columnClickHandle{
+  (tableName: string, columns:IColumnsMetaData[]) : void;
+}
 /**
  * 字段的元数据
  */
@@ -88,6 +90,7 @@ export interface IColumnsMetaData {
   datatype: string
   defaultvalue: string
   comment?: string
+  inQuery?: boolean
 }
 
 /**
@@ -97,41 +100,68 @@ export interface ITableMetaData {
   tablename: string
   comment?: string
   columns: IColumnsMetaData[]
+  onColumnClick? : columnClickHandle
 }
 
-const handleColumnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-  const tag = e.target
-  console.log('column click', e.target)
-}
 
-const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment }) => {
+const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, onColumnClick }) => {
   useEffect(() => {
     console.log('tablename', tablename, columns)
   })
+  //
+  const [inQueryColumns, setInQueryColumns] = useState(columns);
+
+
+  const handleColumnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    
+    let tag = e.target as HTMLElement;
+    if( (tag.tagName === 'DIV' || tag.tagName === 'SVG') && tag.parentElement){
+        tag = tag.parentElement;
+    }
+    let tableName = tag.getAttribute('data-tablename');
+    let columnName = tag.getAttribute('data-columnname');
+    let inTheQuery = tag.getAttribute('data-inquery');
+    console.log('column click', tableName,columnName,inTheQuery);
+    let tmpColums = [... inQueryColumns]
+    for (let i = 0; i < tmpColums.length; i++) {
+      let col = tmpColums[i];
+      if(col.columnname === columnName){
+        col.inQuery = inTheQuery==='true'?false:true;
+      }
+    }
+    if(onColumnClick && tableName ){
+      onColumnClick(tableName,tmpColums)
+    }
+    setInQueryColumns(tmpColums);
+  }
+
   const cells = []
-  const inTheQuery = true
-  for (const col in columns) {
+  for (const col in inQueryColumns) {
     if (columns[col]) {
-      const column = columns[col]
+      const column = columns[col];
+      const {columnname,comment,inQuery} = column;
+      const inTheQuery = inQuery?inQuery:false;
       cells.push(
         <TableRow
           onClick={handleColumnClick}
           affected={false}
-          inTheQuery={false}
-          title={column.comment}
+          inTheQuery={inTheQuery}
+          data-inquery={inTheQuery}
           data-tablename={tablename}
-          data-columnname={column.columnname}
+          data-columnname={columnname}
         >
-          {inTheQuery && <StatusGood style={{ height: '15px' }} color="#26c281" />}
-          <TableCell>{column.columnname}</TableCell>
-          <TableCell>{column.datatype}</TableCell>
+          <StatusGood style={{ height: '15px', marginTop:'5px' }} color={inTheQuery?'#26c281':'#cccc'} />
+          <TableCell >{columnname}</TableCell>
+          <TableCell style={{color:'#666'}}>{comment}</TableCell>
         </TableRow>,
       )
     }
   }
   return (
     <TableContainer tablename="ddd" data-comment={comment}>
-      <TableTitle>{tablename}</TableTitle>
+      <TableTitle>{tablename}
+        <div style={{ color:'#666',borderTop:'1px #ccc dashed',margin:'3px' }}>{comment}</div>
+      </TableTitle>
       <TableRowsList>{cells}</TableRowsList>
     </TableContainer>
   )
