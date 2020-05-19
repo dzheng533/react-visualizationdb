@@ -1,32 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { License, StatusGood } from 'grommet-icons'
+import '../css/table.css'
 
 interface ITableProps {
   selectedtable?: string
   tablename: string
 }
-/**
- * 表格外容器
- */
-const TableContainer = styled.div<ITableProps>`
-  display: flex;
-  flex-direction: column;
-  font-size: 80%;
-  border-radius: 3px;
-  transition: 0.3s;
-`
-/**
- * 表头
- */
-const TableTitle = styled.div`
-  text-align: left;
-  font-weight: blod;
-  line-height: 20px;
-  padding: 5px;
-  overflow-wrap: break-word;
-  border-bottom: 1px solid #666;
-`
+
 /**
  * 表列的容器
  */
@@ -162,11 +143,12 @@ export const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, o
     }
   }
   return (
-    <TableContainer tablename="ddd" data-comment={comment}>
-      <TableTitle>{tablename}
-        <div style={{ color:'#666',borderTop:'1px #ccc dashed',margin:'3px' }}>{comment}</div>
-      </TableTitle>
+    <div className="tableContainer" >
+      <div className="tableTitle" >{tablename}
+        <div className='tableComment' >{comment}</div>
+      </div>
       <TableRowsList>{cells}</TableRowsList>
-    </TableContainer>
+
+    </div>
   )
 }

@@ -1,0 +1,16 @@
+.tableContainer{
+    display: flex;
+    flex-direction: column;
+    font-size: 80%;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+.tableTitle{
+  text-align: left;
+  font-weight: blod;
+  line-height: 20px;
+  padding: 5px;
+  overflow-wrap: break-word;
+  border-bottom: 1px solid #666;
+}
+.tableComment{ color:#666; border-top:1px #ccc dashed; margin:3px }
