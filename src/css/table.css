@@ -14,3 +14,56 @@
   border-bottom: 1px solid #666;
 }
 .tableComment{ color:#666; border-top:1px #ccc dashed; margin:3px }
+
+.tableRowList{
+    overflow: auto;
+    height: calc(100% - 25px);
+    padding: 3px;
+    margin: 2px;
+}
+
+.tableRowList::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.tableRowList::-webkit-scrollbar {
+    width: 12px;
+    background-color: #f5f5f5;
+}
+
+.tableRowList::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f0f0f0;
+}
+.tableRow{
+  display: flex;
+  list-style: none;
+  padding: 0px 3px;
+  border: 2px solid transparent;
+  transition: 0.3s;
+}
+.tableRow :hover {
+    background-color: #f4f4f4;
+    transform: scale(1.01);
+    cursor: pointer;
+}
+/*2px solid transparent*/
+
+.tableCell{
+  font-size: 100%;
+  display: flex;
+  align-items: left;
+  margin: 2px 8px 2px 0px;
+  line-height:20px;
+}
+.tableCellComment{
+  font-size: 100%;
+  display: flex;
+  align-items: left;
+  margin: 2px 8px 2px 0px;
+  line-height:20px;
+  color:#666666;
+}

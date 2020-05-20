@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { License, StatusGood } from 'grommet-icons'
+import { License, StatusGood ,Checkbox ,CheckboxSelected, RotateRight} from 'grommet-icons'
 import '../css/table.css'
 
 interface ITableProps {
@@ -9,57 +8,48 @@ interface ITableProps {
 }
 
 /**
- * 表列的容器
- */
-const TableRowsList = styled.ul`
-  overflow: auto;
-  height: calc(100% - 25px);
-  padding: 3px;
-  margin: 2px;
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    background-color: #f5f5f5;
-  }
-
-  ::-webkit-scrollbar {
-    width: 12px;
-    background-color: #f5f5f5;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #f0f0f0;
-  }
-`
-
-/**
  * 每个字段一行
  */
-interface ITableRowProps {
-  affected: boolean
-  inTheQuery: boolean // 是否是查询条件
+interface ITableRowMetaData{
+  tableName: String,
+  column: IColumnsMetaData
+  clickHandle?:rowClickHandle
 }
-const TableRow = styled.li<ITableRowProps>`
-  display: flex;
-  list-style: none;
-  padding: 0px 3px;
-  border: ${props => (props.affected ? '2px solid #26c281' : '2px solid transparent')};
-  transition: 0.3s;
-  :hover {
-    background-color: #f4f4f4;
-    transform: scale(1.01);
-    cursor: pointer;
+interface rowClickHandle{
+  (columnName: string,inQuery:string) : void;
+}
+export const TableRow: React.FC<ITableRowMetaData> = ({tableName, column, clickHandle}) => {
+  const {columnname,comment,inQuery} = column;
+  const inTheQuery = inQuery?inQuery:false;
+  const handleColumnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    let tag = e.target as HTMLElement;
+    if( (tag.tagName.toLowerCase() === 'div' || tag.tagName.toLowerCase() === 'svg' || tag.tagName === 'path') && tag.parentElement){
+        tag = tag.parentElement;
+        if (tag.tagName.toLowerCase() === 'svg' && tag.parentElement)
+           tag = tag.parentElement;
+    }
+    let tableName = tag.getAttribute('data-tablename');
+    let columnName = tag.getAttribute('data-columnname');
+    let inTheQuery = tag.getAttribute('data-inquery');
+    console.log('column click', tableName,columnName,inTheQuery);
+    columnName = columnName?columnName:columnname;
+    let inTheQueryBool = inTheQuery?inTheQuery : 'false';
+    clickHandle &&clickHandle(columnName, inTheQueryBool);
   }
-`
-const TableCell = styled.div`
-  font-size: 100%;
-  display: flex;
-  align-items: left;
-  margin: 2px 8px 2px 0px;
-  line-height:20px;
-`
+  return(
+    <li className="tableRow" 
+        data-inquery={inTheQuery}
+        data-tablename={tableName}
+        data-columnname={columnname}
+        onClick={handleColumnClick}
+        >
+          {inTheQuery? <CheckboxSelected style={{width:'15px',marginRight:'3px'}}/> : <Checkbox  style={{width:'15px',marginRight:'3px'}}/>}
+          <div className="tableCell">{columnname}</div>
+          <div className="tableCellComment">{comment}</div>
+        </li>
+  );
+}
+
 export interface columnClickHandle{
   (tableName: string, columns:IColumnsMetaData[]) : void;
 }
@@ -85,28 +75,17 @@ export interface ITableMetaData {
   onColumnClick? : columnClickHandle
 }
 
-
+/**
+ * 表格组件
+ * @param param0 ItableMetaData
+ */
 export const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, onColumnClick }) => {
-  useEffect(() => {
-    console.log('tablename', tablename, columns)
-  })
   //
   const [inQueryColumns, setInQueryColumns] = useState(columns);
 
+  const handleColumnClick = (columnName:string,inTheQuery:string) => {
 
-  const handleColumnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    
-    let tag = e.target as HTMLElement;
-    if( (tag.tagName.toLowerCase() === 'div' || tag.tagName.toLowerCase() === 'svg' || tag.tagName === 'path') && tag.parentElement){
-        tag = tag.parentElement;
-        if (tag.tagName.toLowerCase() === 'svg' && tag.parentElement)
-           tag = tag.parentElement;
-    }
-    debugger
-    let tableName = tag.getAttribute('data-tablename');
-    let columnName = tag.getAttribute('data-columnname');
-    let inTheQuery = tag.getAttribute('data-inquery');
-    console.log('column click', tableName,columnName,inTheQuery);
+    console.log('column click', tablename,columnName,inTheQuery);
     let tmpColums = [... inQueryColumns]
     for (let i = 0; i < tmpColums.length; i++) {
       let col = tmpColums[i];
@@ -114,8 +93,8 @@ export const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, o
         col.inQuery = inTheQuery==='true'?false:true;
       }
     }
-    if(onColumnClick && tableName ){
-      onColumnClick(tableName,tmpColums)
+    if(onColumnClick && tablename ){
+      onColumnClick(tablename,tmpColums)
     }
     setInQueryColumns(tmpColums);
   }
@@ -124,21 +103,8 @@ export const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, o
   for (const col in inQueryColumns) {
     if (columns[col]) {
       const column = columns[col];
-      const {columnname,comment,inQuery} = column;
-      const inTheQuery = inQuery?inQuery:false;
       cells.push(
-        <TableRow
-          onClick={handleColumnClick}
-          affected={false}
-          inTheQuery={inTheQuery}
-          data-inquery={inTheQuery}
-          data-tablename={tablename}
-          data-columnname={columnname}
-        >
-          <StatusGood style={{ height: '15px', marginTop:'5px' }} color={inTheQuery?'#26c281':'#cccc'} />
-          <TableCell >{columnname}</TableCell>
-          <TableCell style={{color:'#666'}}>{comment}</TableCell>
-        </TableRow>,
+        <TableRow tableName={tablename} column = {column} clickHandle={handleColumnClick}></TableRow>
       )
     }
   }
@@ -147,7 +113,7 @@ export const Table: React.FC<ITableMetaData> = ({ tablename, columns, comment, o
       <div className="tableTitle" >{tablename}
         <div className='tableComment' >{comment}</div>
       </div>
-      <TableRowsList>{cells}</TableRowsList>
+      <ul className="tableRowList">{cells}</ul>
 
     </div>
   )
