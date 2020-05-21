@@ -1,0 +1,33 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1589903663256'); /* IE9 */
+  src: url('iconfont.eot?t=1589903663256#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPIAAsAAAAACHgAAAN5AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqEAINCATYCJAMUCwwABCAFhG0HXhtkBxEVnInIPhJy06RPOdHEQhVNNN4EEenS2QNFuQ8DV0AElZFLhbizna25OlDHTw7z6Mqu9skf6kJ2u6V0sjm06v+4VzXTE7D57IfiMtegQbkA5ULzfACNMb1ABW1BWqugd4GdQ/idgPsQwFGGWkinLr0G4WNQlgkgUydNGIUf0mByiIIv91L2GmQnFl9tUmHADvv75QsNxAeF1Shr+43vPJZ2Qb6PT/TK/ysZaqLgtmcCpEOggVqAAZmdapmKdiO10LjP7xnaAQ4fhQryBaWC/h+f/P8PX8GMZE79hweCQmNAPJTcXAC0o6iBIJ+OQCAohUBB0B+Bho9PeCfmEQuAA0LAdiCR8JXKFAaNyqc4/Vy5PO0zLMrzPuHVnknsmvdd/Is5Gbf47FPMymeV8154UdIefl5l0fz88xL2yIuqec89K24OPq2V535MGXsitmnee9GlzdGoxZsvln33UijvlitiV112g8YOaTX4rvWERULCNjFxFx+/iYu7oGjtsIKmhIQiq1m3GSVItmmSbf6YaGYwxe/0XXDqraGo546r/qfKzU6lptx3+p9iE9xUt5ImlHt5sqF76RqeBPqVg/2X/uCVg+vsaZsnf56XevKyOy1bbtgQpo0lfNIkOK2TkoanVabJMgR+0bhhq2cmM9Og8BmzUMBn5K688Jx+/lyXzun8r3HX/PxpUHiXWVjBSfEhHRY2ROEhZqGAJ/cWAvA/Qt/W9WzlS63Wt8NYvL6ia97vn+HXtiYYkbfVPz9kAEj5/FoX3f9fGspzbpqUD/fuckvWmS9f0VrzrtY5b6ulWUCD+rQ54J46CpDRjqxw6RAIfogrgSIHpUHjUwlt8LXAEqIRePi0BUdNuh4OUZDZaMTkBGqwDkDIxw1Q5OEFaPIRjjb4dLAU4Rt45BMNDsRWbs+c8Clm/MWYCOaQnsFk1CpNL2Mnf4l6Xycc5NukLbI1fghcPxr/wxa5jQ32oEMRBYqpgV94DOuaoGMqMRO3EOliz1NpH+Rm1PTGfMEgCQKSA6ScAQwZRIsyWwvj2NcvQTR7ahI4p+aHcQvCWMzoQICLXwL9J2lL1RzLZMsBTYggKF6kYIgG4BdNSK1GCKBLn1WCZAguRY1QR4xHjVRZidu/rDnGfYBD+QMrSrQYseIxXYDmtE/aS0GtHrnsDRniCFqZZZqDXg8AAAA=') format('woff2'),
+  url('iconfont.woff?t=1589903663256') format('woff'),
+  url('iconfont.ttf?t=1589903663256') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1589903663256#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-weixuanzhong:before {
+  content: "\e610";
+}
+
+.icon-xuanzhong:before {
+  content: "\e61c";
+}
+
+.icon-icon-test:before {
+  content: "\e651";
+}
+
+.icon-weixuanzhong1:before {
+  content: "\e8bb";
+}
+
