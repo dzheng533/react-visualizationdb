@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { License, StatusGood ,Checkbox ,CheckboxSelected, RotateRight} from 'grommet-icons'
+//import { License, StatusGood ,Checkbox ,CheckboxSelected, RotateRight} from 'grommet-icons'
 import '../css/table.css'
 
 interface ITableProps {
@@ -43,7 +43,7 @@ export const TableRow: React.FC<ITableRowMetaData> = ({tableName, column, clickH
         data-columnname={columnname}
         onClick={handleColumnClick}
         >
-          {inTheQuery? <CheckboxSelected style={{width:'15px',marginRight:'3px'}}/> : <Checkbox  style={{width:'15px',marginRight:'3px'}}/>}
+          {/* {inTheQuery? <CheckboxSelected style={{width:'15px',marginRight:'3px'}}/> : <Checkbox  style={{width:'15px',marginRight:'3px'}}/>} */}
           <div className="tableCell">{columnname}</div>
           <div className="tableCellComment">{comment}</div>
         </li>

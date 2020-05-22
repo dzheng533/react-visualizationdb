@@ -1,44 +1,27 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import {Table, ITableMetaData, IColumnsMetaData,columnClickHandle } from './Table'
 
+
+export interface IEmptyStateMetaData {
+  message?: string
+
+}
 /**
  * 空表状态
  */
-const SEmptyState = styled.div`
-  margin: auto;
-  text-align: center;
-  padding: 20px;
-`
+const SEmptyState: React.FC<IEmptyStateMetaData> = ({message}) => {
+return (<div className="emptyComponent">{message?message:"没有数据表信息。"}</div>)
+}
 /**
  * 总容器
  */
-const TempWrapper = styled.div`
-  overflow: scroll-x;
-  height: calc(100% - 20px);
-  width: calc(100% - 20px);
-  display: flex;
-  border: '1px solid grey';
-  flex-wrap: wrap;
-  padding: 5px 15px;
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: #f5f5f5;
-  }
+const MainWrapper:React.FC = (props)=>{
+  console.log("props:",props);
+  const {children} = props;
+  return <div className="mainWapper">{children}</div>
+}
 
-  ::-webkit-scrollbar {
-    width: 12px;
-    background-color: #f5f5f5;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #d62929;
-  }
-`
 /**
  * 表格容器
  */
@@ -46,17 +29,11 @@ interface ITableWrapperProps {
   highlightForRelationship: string
 }
 
-const TableWrapper = styled.div<ITableWrapperProps>`
-  width: auto;
-  max-height: 200px;
-  border-radius: 3px;
-  overflow: hidden;
-  margin: 8px;
-  border: ${({ highlightForRelationship }) =>
-    highlightForRelationship === 'true' ? '1px solid transparent' : '1px solid grey'};
-  box-shadow: ${({ highlightForRelationship }) =>
-    highlightForRelationship === 'true' ? '0px 0px 8px #4B70FE' : 'none'};
-`
+const TableWrapper : React.FC<ITableWrapperProps> = (props,{highlightForRelationship}) => {
+  const {children} = props;
+  return <div className="tableWapper">{children}</div>;
+}
+
 interface ITableListOption{
     dockedTableNames?:string[],
     highlightTables?:string[],
@@ -104,15 +81,11 @@ export const TablesList: React.FC<ITablesListProps> = ({ tables , options}) => {
     }
   }
   if (tables.length > 0) {
-    return <TempWrapper>{tmpTables}</TempWrapper>
+    return <MainWrapper>{tmpTables}</MainWrapper>
   }
   return (
-    <TempWrapper>
-      <SEmptyState>
-        <span>
-          没有数据表信息。
-        </span>
-      </SEmptyState>
-    </TempWrapper>
+    <MainWrapper>
+      <SEmptyState />
+    </MainWrapper>
   )
 }
