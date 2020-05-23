@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 //import { License, StatusGood ,Checkbox ,CheckboxSelected, RotateRight} from 'grommet-icons'
 import '../css/table.css'
+import '../css/iconfont.css'
 
 interface ITableProps {
   selectedtable?: string
@@ -43,7 +44,7 @@ export const TableRow: React.FC<ITableRowMetaData> = ({tableName, column, clickH
         data-columnname={columnname}
         onClick={handleColumnClick}
         >
-          {/* {inTheQuery? <CheckboxSelected style={{width:'15px',marginRight:'3px'}}/> : <Checkbox  style={{width:'15px',marginRight:'3px'}}/>} */}
+          <span className={inTheQuery?'iconfont icon-xuanzhong':'iconfont icon-weixuanzhong'} ></span>
           <div className="tableCell">{columnname}</div>
           <div className="tableCellComment">{comment}</div>
         </li>
