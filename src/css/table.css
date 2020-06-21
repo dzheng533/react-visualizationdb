@@ -30,6 +30,8 @@
   overflow: hidden;
   margin: 8px;
   border: 1px solid grey;
+}
+.tableWapper.active{
   box-shadow: 0px 0px 8px #4B70FE;
 }
 
