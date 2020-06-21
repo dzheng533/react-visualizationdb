@@ -1,0 +1,8 @@
+[{
+    "tableName":"t_index_data",
+    "tableAliseName":"指标算值表"
+},
+{
+    "tableName":"t_txbs_stamp_item",
+    "tableAliseName":"增值税税率表"
+}]

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Editor } from "../../src/components/Sqleditor";
 import { TablesList} from '../../src/components/TableList'
 import {Table,IColumnsMetaData} from '../../src/components/Table'
 
@@ -64,7 +65,8 @@ class App extends React.Component<IProps, IStates> {
     }
     return (
       <React.Fragment>
-        <TablesList tables={tableList} options={{highlightTables:['t_cfg_index_def2'],onColumnClick:columnClick}} />
+        {/* <TablesList tables={tableList} options={{highlightTables:['t_cfg_index_def2'],onColumnClick:columnClick}} /> */}
+        <Editor width={500} height={600} tables={[]}></Editor>
       </React.Fragment>
     )
   }

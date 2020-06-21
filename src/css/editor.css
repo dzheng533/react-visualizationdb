@@ -1,0 +1,63 @@
+.editorContainer{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    height: 100%;
+    border: #e9e9e9 1px solid;
+}
+.autoCompleteContainer{
+    background-color: #ffffff;
+    border: #e9e9e9 1px solid;
+    position: absolute;
+    top: 100px;
+    left: 30px;
+}
+.editor{
+    display: flex;
+    text-align: left;   
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    padding: 5px;
+    line-height: 20px;
+    outline: none;
+    flex-direction: row;
+    overflow-wrap: break-word;
+}
+.editor input{
+    border:none;
+    height:25px;
+    outline:none;
+    width:1px;
+    display: flex;
+}
+.block{
+    display: flex;
+    border: 1px #fa541c solid;
+    background-color: rgba(250, 83, 28, 0.3);
+    font-size: 80%;
+    height: 20px;
+    border-radius: 5px;
+    padding: 2px;
+    line-height: 16px;
+}
+.block.uneditable{
+    cursor: pointer;
+}
+.block.editable{
+    cursor: auto;
+    box-shadow: 0px 0px 3px 1px rgba(250,83,28,0.5);
+}
+
+span { line-height: 24px;    height: 24px;}
+span.acItem{
+    padding: 5px;
+    display: block;
+    border-bottom: #d9d9d9 1px solid;
+}
+span.acItem.active{
+    background-color: cadetblue;
+}
+
+span.acItem:hover{
+    background-color: cadetblue;
+}
