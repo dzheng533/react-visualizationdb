@@ -1,6 +1,4 @@
 .editorContainer{
-    display: flex;
-    flex-direction: row;
     width:100%;
     height: 100%;
     border: #e9e9e9 1px solid;
@@ -14,14 +12,18 @@
 }
 .editor{
     display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items:flex-start;
+    align-content:flex-start;
     text-align: left;   
     width: calc(100% - 10px);
     height: calc(100% - 10px);
     padding: 5px;
     line-height: 20px;
     outline: none;
-    flex-direction: row;
-    overflow-wrap: break-word;
 }
 .editor input{
     border:none;
@@ -30,8 +32,8 @@
     width:1px;
     display: flex;
 }
-.block{
-    display: flex;
+.blockItem{
+    flex-grow:0;
     border: 1px #fa541c solid;
     background-color: rgba(250, 83, 28, 0.3);
     font-size: 80%;
@@ -40,12 +42,21 @@
     padding: 2px;
     line-height: 16px;
 }
-.block.uneditable{
+.blockItem.uneditable{
     cursor: pointer;
 }
-.block.editable{
+.blockItem.editable{
     cursor: auto;
     box-shadow: 0px 0px 3px 1px rgba(250,83,28,0.5);
+}
+.blockItem.field{
+    
+}
+.blockItem.method{}
+.blockItem.value{}
+
+.breakItem{
+    flex-grow: 1;
 }
 
 span { line-height: 24px;    height: 24px;}

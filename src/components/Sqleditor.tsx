@@ -25,23 +25,33 @@ interface IAutoComplete{
     onSelectChange?():void
 }
 interface IConditionProp{
-    //table:ISourceTabelProp
-}
-
-interface IConditionState{
     isEdit:boolean
 }
-class ConditionBlock extends React.Component<IConditionProp,IConditionState> {
-
-    public state = {
-        'isEdit':false
-    };
-
-    render(){
-        console.log(this.state);
-        return ( <div className="block">{this.state.isEdit?'true':'false'}</div>);
-    }
+interface ICondItem{
+    key:string,
+    alias:string,
 }
+interface IConditionState{
+    isEdit:boolean,
+    field?: ICondItem,
+    method?: ICondItem,
+    value?: ICondItem,
+}
+
+export const ConditionBlock :React.FC<IConditionProp> = ({isEdit}) => {
+
+    return (<div className="blockItem">
+    {isEdit?
+    <><div className="field"></div>
+    <div className="method"></div>
+    <div className="value"></div>
+    </>
+    :<><div className="field"></div>
+    <div className="method"></div>
+    <div className="value"></div>
+    </>}</div>)
+}
+
 export const AutoCompleteItem : React.FC<IAutoComplete> = ({config, data, activeValue}) =>{
     const autoCompRef = useRef(AutoCompleteItem);
     let displayStyle = config.show?'block':'none';
@@ -85,10 +95,31 @@ export const Editor: FC<IEditorProp> = ({width, height}) => {
             })
         }
     };
+    let hideAcComponment = ()=>{
+        if( acOption.show ){
+            let tmpOption = Object.assign({},Object.assign(acOption,{"show":false}));
+            console.log("TmpOption",tmpOption);
+            setAcOption(tmpOption);
+        }
+    }
 
     let addEmpthComponment = ()=>{
         const nextCondNodes = [... conditionNodes];
-        nextCondNodes.push( <ConditionBlock  /> )
+        nextCondNodes.push( {isEdit:true} )
+        setConditionNodes(nextCondNodes);
+    }
+    let addBreakComponment = ()=>{
+        const nextCondNodes = [... conditionNodes];
+        //nextCondNodes.push( <BreakBlock /> )
+        setConditionNodes(nextCondNodes);
+    }
+    let deleteComponment = ()=>{
+        if(conditionNodes.length == 0)
+            return;
+        
+        conditionNodes.splice(conditionNodes.length - 1 ,1);
+        const nextCondNodes = [... conditionNodes];
+        console.log("del:",nextCondNodes);
         setConditionNodes(nextCondNodes);
     }
 
@@ -102,23 +133,38 @@ export const Editor: FC<IEditorProp> = ({width, height}) => {
     };
 
     let handleKeyEvent = (e:React.KeyboardEvent) =>{
+        console.log("KeyCode:",e.keyCode)
         switch (e.keyCode){
             case 32:
+                // 空格键处理
                 addEmpthComponment();
                 getTableSource();
                 showAcComponment();
             break;
             case 38:
+                // 向上箭头
                 if (selectIndex > 0){
                     setSelectIndex(selectIndex - 1);
                 }
                 break;
             case 40:
+                // 向下箭头
                 if (selectIndex < sourceTables.length-1){
                     setSelectIndex(selectIndex + 1);
                 }
                 break;
+            case 8:
+                //删除
+                hideAcComponment();
+                deleteComponment();
+                break;
             case 13:
+                //回车
+                if( acOption.show ){
+                    hideAcComponment();
+                }else{
+                    addBreakComponment();
+                }
                 break;
             default:
                 break;
@@ -150,7 +196,9 @@ export const Editor: FC<IEditorProp> = ({width, height}) => {
     let activeValue = sourceTables[selectIndex];
     return (<div className="editorContainer" style={{width:widthpx, height:heightpx}}>
         <div className="editor"  onClick={handleMouseEvent} onContextMenu={handleMouseEvent} >
-         {conditionNodes}
+         {conditionNodes.map((item)=>{
+            return (<ConditionBlock isEdit={item.isEdit} />);
+        })}
          <input ref={inputRef} onKeyDown={handleKeyEvent} />
         </div>
         <AutoCompleteItem config={acOption} data={sourceTables} activeValue={activeValue} />
